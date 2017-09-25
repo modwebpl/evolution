@@ -1178,7 +1178,7 @@ class DocumentParser
      */
     function mergeDocumentContent($content, $ph = false)
     {
-        if (stripos($content, '<@LITERAL>') !== false) {
+        if (strpos(strtoupper($content), '<@LITERAL>') !== false) {
             $content = $this->escapeLiteralTagsContent($content);
         }
         if (strpos($content, '[*') === false) {
@@ -1367,7 +1367,7 @@ class DocumentParser
      */
     function mergeSettingsContent($content, $ph = false)
     {
-        if (stripos($content, '<@LITERAL>') !== false) {
+        if (strpos(strtoupper($content), '<@LITERAL>') !== false) {
             $content = $this->escapeLiteralTagsContent($content);
         }
         if (strpos($content, '[(') === false) {
@@ -1417,7 +1417,7 @@ class DocumentParser
         if (strpos($content, '{{ ') !== false) {
             $content = str_replace(array('{{ ', ' }}'), array('\{\{ ', ' \}\}'), $content);
         }
-        if (stripos($content, '<@LITERAL>') !== false) {
+        if (strpos(strtoupper($content), '<@LITERAL>') !== false) {
             $content = $this->escapeLiteralTagsContent($content);
         }
         if (strpos($content, '{{') === false) {
@@ -1480,7 +1480,7 @@ class DocumentParser
     function mergePlaceholderContent($content, $ph = false)
     {
 
-        if (stripos($content, '<@LITERAL>') !== false) {
+        if (strpos(strtoupper($content), '<@LITERAL>') !== false) {
             $content = $this->escapeLiteralTagsContent($content);
         }
         if (strpos($content, '[+') === false) {
@@ -1719,7 +1719,7 @@ class DocumentParser
      */
     function escapeLiteralTagsContent($content, $left = '<@LITERAL>', $right = '<@ENDLITERAL>')
     {
-        if (stripos($content, $left) === false) {
+        if (strpos(strtoupper($content), $left) === false) {
             return $content;
         }
         
@@ -4180,7 +4180,7 @@ class DocumentParser
         }
         if (isset ($this->chunkCache[$chunkName])) {
             $out = $this->chunkCache[$chunkName];
-        } else if (stripos($chunkName, '@FILE') === 0) {
+        } elseif (strpos(strtoupper($chunkName), '@FILE') === 0) {
             $out = $this->chunkCache[$chunkName] = $this->atBindFileContent($chunkName);
         } else {
             $where = sprintf("`name`='%s' AND disabled=0", $this->db->escape($chunkName));
@@ -4223,7 +4223,7 @@ class DocumentParser
             return $tpl;
         }
 
-        if (stripos($tpl, '<@LITERAL>') !== false) {
+        if (strpos(strtoupper($tpl), '<@LITERAL>') !== false) {
             $tpl = $this->escapeLiteralTagsContent($tpl);
         }
 
@@ -5882,7 +5882,7 @@ class DocumentParser
 
         $search_path = array('assets/tvs/', 'assets/chunks/', 'assets/templates/', $this->config['rb_base_url'] . 'files/', '');
 
-        if (stripos($str, '@FILE') !== 0) {
+        if (strpos(strtoupper($str), '@FILE') !== 0) {
             return $str;
         }
         if (strpos($str, "\n") !== false) {
@@ -6505,7 +6505,7 @@ class DocumentParser
      */
     function splitKeyAndFilter($key)
     {
-        if ($this->config['enable_filter'] == 1 && strpos($key, ':') !== false && stripos($key, '@FILE') !== 0) {
+        if ($this->config['enable_filter'] == 1 && strpos($key, ':') !== false && strpos(strtoupper($key), '@FILE') !== 0) {
             list($key, $modifiers) = explode(':', $key, 2);
         } else {
             $modifiers = false;

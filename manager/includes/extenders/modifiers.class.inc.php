@@ -1141,10 +1141,11 @@ class MODIFIERS {
     function strip_tags($value,$params='') {
         global $modx;
 
-        if(stripos($params,'style')===false && stripos($value,'</style>')!==false) {
+        $params = strtolower($params);
+        if(strpos($params,'style')===false && strpos(strtolower($value),'</style>')!==false) {
             $value = preg_replace('@<style.*?>.*?</style>@is', '', $value);
         }
-        if(stripos($params,'script')===false && stripos($value,'</script>')!==false) {
+        if(strpos($params,'script')===false && strpos(strtolower($value),'</script>')!==false) {
             $value = preg_replace('@<script.*?>.*?</script>@is', '', $value);        
         }
   
