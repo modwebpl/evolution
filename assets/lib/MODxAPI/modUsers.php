@@ -267,7 +267,7 @@ class modUsers extends MODxAPI
      */
     public function getPassword($pass)
     {
-        return md5($pass);
+        return password_hash($pass, PASSWORD_BCRYPT, ['cost' => 10]);
     }
 
     /**
@@ -526,7 +526,7 @@ class modUsers extends MODxAPI
                 $pluginFlag = (bool)$eventResult;
             }
             if (! $pluginFlag) {
-                $flag = ($tmp->get('password') == $tmp->getPassword($password));
+                $flag = password_verify($password, $tmp->get('password'));
             }
         }
         unset($tmp);
