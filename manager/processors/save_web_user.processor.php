@@ -94,7 +94,7 @@ switch ($input['mode']) {
 		// create the user account
 		$field = array();
 		$field['username'] = $newusername;
-		$field['password'] = md5($newpassword);
+		$field['password'] = password_hash($newpassword, PASSWORD_BCRYPT, ['cost' => 10]);
 		$webUser= EvolutionCMS\Models\WebUser::create($field);
 		$internalKey = $webUser->getKey();
 		$field = compact( 'fullname', 'role', 'email', 'phone', 'mobilephone', 'fax', 'zip', 'street', 'city', 'state', 'country', 'gender', 'dob', 'photo', 'comment', 'blocked', 'blockeduntil', 'blockedafter');
@@ -223,7 +223,7 @@ switch ($input['mode']) {
 		$field = array();
 		$field['username'] = $newusername;
         if ($genpassword == 1) {
-			$field['password'] = md5($newpassword);
+			$field['password'] = password_hash($newpassword, PASSWORD_BCRYPT, ['cost' => 10]);
 		}
 		$webUser = EvolutionCMS\Models\WebUser::find($id);
 		$webUser->update($field);
