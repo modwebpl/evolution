@@ -11,7 +11,7 @@ if ($e->name == 'OnWebAuthentication' && isset($userObj)) {
     /**
      * @var modUsers $userObj
      */
-    if ($savedpassword != $userObj->getPassword($userpassword)) {
+    if (!password_verify($userpassword, $savedpassword)) {
         $fails = (int)$userObj->get('failedlogincount');
         $userObj->set('failedlogincount', ++$fails);
         if ($fails > $maxFails) {
